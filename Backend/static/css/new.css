@@ -1,0 +1,32 @@
+.back {
+background: linear-gradient(to right top, #FFFFFF 21.53%, rgba(196, 255, 128, 0.958333) 21.53%, rgba(73, 255, 146, 0) 48.14%, rgba(137, 251, 169, 0.81) 64.86%, rgba(255, 255, 255, 0.951128) 87.9%);
+background-blend-mode: lighten;
+mix-blend-mode: normal;
+border: 3px solid #122211;
+box-sizing: border-box;
+border-radius: 90px;
+min-height: 100vh;
+}
+
+.roud {
+border-radius: 40px
+}
+
+.carda {
+  box-shadow: 0 9px 16px 0 rgba(255,0,0,0.15);
+  transition: 0.6s;
+  background: rgba(255,255,255,0.4);
+border-radius: 45px; /* 5px rounded corners */
+padding-top: 20px;
+padding-right: 20px;
+padding-bottom: 20px;
+padding-left: 40px;
+}
+
+.without_trans {
+  opacity: 1
+}
+
+$card-radius {
+border-radius: 45px;
+}
