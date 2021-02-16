@@ -32,3 +32,16 @@ class TestTransactions():
         assert 300 == fields[0]['inital_balance']
         assert "2019-01-12 09:00:00" == fields[0]['time']
         assert fields[0]['type'] != 'income'
+
+
+    def test_post(self):
+        data = {
+            "user_id": "1",
+            "content": "a content",
+            "participant1": "participant1",
+            "participant2": "participant2",
+            "participant3": "participants"
+        }
+        response = requests.post("/AddMessage", json=json.dumps(data))
+        json_response = response.json()
+        print(json_response)
