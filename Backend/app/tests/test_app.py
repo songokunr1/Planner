@@ -2,8 +2,7 @@ import json
 
 import requests
 
-from Backend.app import app
-from Backend import create_test_app
+from Backend.app.app import app
 import pytest
 
 
@@ -48,5 +47,22 @@ def test_post():
 
 class TestSomethings:
     def test_post_2(self, client):
-        r = client.get("/")
-        assert r.status_code == 201
+        r = client.get("/ba")
+        assert r.status_code == 200
+
+    def test_json(self, client):
+        r = client.get("/be")
+        json_data = {
+            "name": "ivanleoncz",
+            "role": "Software Developer"
+        }
+        json.dumps(json_data)
+        print(r)
+
+    def test_post(self, client):
+        response = client.post(
+            '/message',
+            data=json.dumps({'a': 1, 'b': 2}),
+            content_type='application/json',
+        )
+        assert response.status_code == 200
