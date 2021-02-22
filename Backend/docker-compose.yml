@@ -2,8 +2,12 @@ version: "3.7"
 services:
   web:
     build: .
+    restart: always
     ports:
       - "5000:5000"
+    volumes:
+      - .:/planner
+
   rq-dashboard:
     image: jaredv/rq-docker:0.0.2
     command: rq-dashboard -H rq-server

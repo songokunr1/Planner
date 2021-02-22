@@ -64,3 +64,9 @@ def get_data():
     print(json.loads(r.data))
     return render_template("base.html")
 
+@app.route("/ba3", methods=['GET'])
+def get_data2():
+    r = app.test_client().get("/ba")
+    print(json.loads(r.data))
+    return render_template("base.html")
+
