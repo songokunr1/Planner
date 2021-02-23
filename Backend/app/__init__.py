@@ -21,5 +21,3 @@ def create_production_app():
     return app
 
 
-app = create_test_app()
-from .app import app
