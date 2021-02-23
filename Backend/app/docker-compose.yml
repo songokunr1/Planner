@@ -8,7 +8,6 @@ services:
     volumes:
       - .:/planner
 
-
   rq-dashboard:
     image: jaredv/rq-docker:0.0.2
     command: rq-dashboard -H rq-server

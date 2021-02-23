@@ -71,7 +71,8 @@ def show_data():
     json_data = {
         "name": "ivanleoncz",
         "role": "Software Developer",
-        "wa": "ha"
+        "wa": "ha",
+        "ba": "udalo sie"
     }
     return json.dumps(json_data)
 

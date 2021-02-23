@@ -6,7 +6,7 @@ ENV FLASK_ENV=development
 ENV FLASK_DEBUG=1
 RUN apk add --no-cache gcc musl-dev linux-headers
 COPY . /planner
-COPY requirements.txt requirements.txt
+COPY ./requirements.txt /planner/requirements.txt
 RUN pip install -r requirements.txt
 EXPOSE 5000
 CMD ["flask", "run"]
