@@ -1,13 +1,30 @@
 from flask import Flask, render_template, url_for, request
 import requests
-from . import app
+# from . import create_test_app
 import json
 import redis
 from rq import Queue
 import time
+from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 r = redis.Redis(host='rq-server', port=6379, decode_responses=True)
 q = Queue(connection=r)
+
+
+def create_test_app():
+    app = Flask(__name__)
+    app.config['TESTING'] = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    # Dynamically bind SQLAlchemy to application
+    db.init_app(app)
+    app.app_context().push() # this does the binding
+    return app
+
+app = create_test_app()
+
+
+
 
 def background_task(n):
 
@@ -53,7 +70,9 @@ def message():
 def show_data():
     json_data = {
         "name": "ivanleoncz",
-        "role": "Software Developer"
+        "role": "Software Developer",
+        "wa": "ha",
+        "ba": "udalo sie"
     }
     return json.dumps(json_data)
 
@@ -62,11 +81,16 @@ def show_data():
 def get_data():
     r = app.test_client().get("/ba")
     print(json.loads(r.data))
+    print('hejo')
     return render_template("base.html")
 
 @app.route("/ba3", methods=['GET'])
 def get_data2():
     r = app.test_client().get("/ba")
     print(json.loads(r.data))
+    print('hejo')
+    print("hejoa")
     return render_template("base.html")
 
+if __name__ == '__main__':
+    app.run(debug=True, port=8030)
