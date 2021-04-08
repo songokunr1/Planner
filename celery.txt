@@ -1,0 +1,22 @@
+celery -A rq worker -l info -P gevent
+celery worker -b redis://localhost:6379 --app=my_app.celery -l INFO
+
+celery -A rq worker -b redis://localhost:6379 -l info -P gevent
+
+
+celery -A <app> worker --loglevel=info -P gevent
+celery worker --app=app.app --pool=gevent --loglevel=INFO
+
+https://stackoverflow.com/questions/42343459/what-is-the-best-option-for-a-python-3-task-queue-on-windows-now-that-celery-4
+
+flower -A rq --port=5555
+
+flower + celery + rq
+
+a = say_hello.delay("Maciek")
+a.get()
+'Hello Maciek'
+>>> a.ready()
+True
+>>> a.status
+'SUCCESS'
