@@ -3,15 +3,15 @@ import requests
 # from . import create_test_app
 import json
 import redis
-from rq import Queue
+# from rq import Queue
 import time
 from flask_sqlalchemy import SQLAlchemy
 
 
 
 db = SQLAlchemy()
-r = redis.Redis(host='rq-server', port=6379, decode_responses=True)
-q = Queue(connection=r)
+# r = redis.Redis(host='redis', port=6379, decode_responses=True)
+# q = Queue(connection=r)
 
 def example(seconds):
     print('Starting task')
@@ -93,8 +93,8 @@ def create_task():
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    job = q.enqueue('app.tasks.example', 23)
-    print(job.get_id())
+    # job = q.enqueue('app.tasks.example', 23)
+    # print(job.get_id())
     return render_template("base.html")
 
 
