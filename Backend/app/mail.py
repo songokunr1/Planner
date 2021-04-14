@@ -28,13 +28,13 @@ class Mail:
     def create_message(self):
         text_to_send = f"""
         Cześć, dziękuję za rezerwację spotkania! 
-        Tutaj znajduje się link do spotkania: {meeting_data['link']}
-        Gdybyś miał jakieś pytania to pisz na: {tutor_data['mail']}. \n
-        Do zobaczenia. {tutor_data['first_name']} {tutor_data['last_name']}
+        Tutaj znajduje się link do spotkania: {self.meeting_data['link']}
+        Gdybyś miał jakieś pytania to pisz na: {self.tutor_data['mail']}. \n
+        Do zobaczenia. {self.tutor_data['first_name']} {self.tutor_data['last_name']}
         """
-        msg = MIMEText(text_to_send)
-        msg['Subject'] = f"{meeting_data['date']} {meeting_data['time']} - {meeting_data['topic']}"
-        return msg
+        self.msg = MIMEText(text_to_send)
+        self.msg['Subject'] = f"{self.meeting_data['date']} {self.meeting_data['time']} - {self.meeting_data['topic']}"
+        return self.msg
 
 
 def get_reciver_data():
@@ -47,12 +47,15 @@ def get_meeting_data():
     return {"date": '2021-04-13', "time": '19:00', "topic": "Python", "link": r"https://us05web.zoom.us/j/82250376345?pwd=bndiSEFZNFdTU0VKQ0tmYmw5bHBGUT09"}
 
 
-reciver_data = get_reciver_data() #database
-tutor_data = get_tutor_data() # database
-meeting_data = get_meeting_data() # database
-# check_if_tutor_is_avaiable() # database method
 
 
-mail = Mail(reciver_data, tutor_data, meeting_data) # mail Class
-mail.create_message()
-mail.send_mail()
+if __name__ == "__main__":
+    reciver_data = get_reciver_data() #database
+    tutor_data = get_tutor_data() # database
+    meeting_data = get_meeting_data() # database
+    # check_if_tutor_is_avaiable() # database method
+
+
+    mail = Mail(reciver_data, tutor_data, meeting_data) # mail Class
+    mail.create_message()
+    mail.send_mail()
