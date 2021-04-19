@@ -1,15 +1,11 @@
 from flask import Flask, render_template, url_for, request, jsonify
 import requests
-# from . import create_test_app
 import json
-import redis
-# from rq import Queue
 import time
-from flask_sqlalchemy import SQLAlchemy
+from flask_jwt import JWT, jwt_required
+from security import authenticate, identity
+from db import db
 
-
-
-db = SQLAlchemy()
 # r = redis.Redis(host='redis', port=6379, decode_responses=True)
 # q = Queue(connection=r)
 
@@ -26,6 +22,8 @@ def example(seconds):
 def create_test_app():
     app = Flask(__name__)
     app.config['TESTING'] = True
+    app.secret_key = 'hard_to_break'
+    jwt = JWT(app, authenticate, identity)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     # Dynamically bind SQLAlchemy to application
     db.init_app(app)
