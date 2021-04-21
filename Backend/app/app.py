@@ -5,6 +5,8 @@ import time
 from flask_jwt import JWT, jwt_required
 from security import authenticate, identity
 from db import db
+from flask_restful import Resource, Api
+
 
 # r = redis.Redis(host='redis', port=6379, decode_responses=True)
 # q = Queue(connection=r)
@@ -26,6 +28,7 @@ def create_test_app():
     jwt = JWT(app, authenticate, identity)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     # Dynamically bind SQLAlchemy to application
+    api = Api(app)
     db.init_app(app)
     app.app_context().push() # this does the binding
     return app
