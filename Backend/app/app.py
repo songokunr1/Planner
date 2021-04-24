@@ -1,11 +1,9 @@
 from flask import Flask, render_template, url_for, request, jsonify
-import requests
 import json
 import time
-from flask_jwt import JWT, jwt_required
-from security import authenticate, identity
-from db import db
-from flask_restful import Resource, Api
+from flask_wtf import CsrfProtect
+# from user import login
+from flask_sqlalchemy import SQLAlchemy
 
 
 # r = redis.Redis(host='redis', port=6379, decode_responses=True)
@@ -25,18 +23,38 @@ def create_test_app():
     app = Flask(__name__)
     app.config['TESTING'] = True
     app.secret_key = 'hard_to_break'
-    jwt = JWT(app, authenticate, identity)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     # Dynamically bind SQLAlchemy to application
-    api = Api(app)
     db.init_app(app)
     app.app_context().push() # this does the binding
-    return app
 
+
+
+    return app
+db = SQLAlchemy()
 app = create_test_app()
 
 
-
+# def login():
+#     # Here we use a class of some kind to represent and validate our
+#     # client-side form data. For example, WTForms is a library that will
+#     # handle this for us, and we use a custom LoginForm to validate.
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         # Login and validate the user.
+#         # user should be an instance of your `User` class
+#         login_user(user)
+#
+#         flask.flash('Logged in successfully.')
+#
+#         next = flask.request.args.get('next')
+#         # is_safe_url should check if the url is safe for redirects.
+#         # See http://flask.pocoo.org/snippets/62/ for an example.
+#         if not is_safe_url(next):
+#             return flask.abort(400)
+#
+#         return flask.redirect(next or flask.url_for('index'))
+#     return flask.render_template('login.html', form=form)
 
 def background_task(n):
 
