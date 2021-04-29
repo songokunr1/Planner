@@ -1,21 +1,9 @@
-from app import db,app
-from flask_login import UserMixin, current_user
+from app import db
 from flask_login import LoginManager
 from werkzeug.security import safe_str_cmp, generate_password_hash, check_password_hash
 
-login = LoginManager(app)
-login.login_view = 'login'
-login.login_message_category = 'info'
 
-@login.user_loader
-def load_user(user_id):
-    try:
-        return User.query.get(user_id)
-    except:
-        return None
-
-
-class User(db.Model, UserMixin):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -55,6 +43,3 @@ class User(db.Model, UserMixin):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
-
-
-

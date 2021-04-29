@@ -19,6 +19,7 @@ def example(seconds):
 
 
 
+
 def create_test_app():
     app = Flask(__name__)
     app.config['TESTING'] = True
@@ -71,6 +72,17 @@ def background_task(n):
     print("Task complete")
 
     return len(n)
+
+@app.route("/test_user")
+def add_user():
+    task = request.args.get("n")
+    print(task)
+    if task:
+        print("hejo")
+        job = q.enqueue('app.tasks.background_task', request.args.get("n"))
+        print(job.get_id())
+        return f"Task ({job.id}) added to queue at {job.enqueued_at}"
+    return "No value for count provided"
 
 
 @app.route("/task")
