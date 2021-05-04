@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   web:
-    build: .
+    build: './gateway'
     restart: always
     ports:
       - "5000:5000"
@@ -14,9 +14,9 @@ services:
 #    ports:
 #      - 9181:9181
 #
-#  rq-worker:
+#  rq-mail:
 #    image: jaredv/rq-docker:0.0.2
-#    command: rq worker -u redis://rq-server:6379 high normal low
+#    command: rq mail -u redis://rq-server:6379 high normal low
 #    deploy:
 #      replicas: 3
 #
@@ -41,8 +41,8 @@ services:
 
 #  celery:
 #    build: .
-#    image: &img worker
-#    command: [ celery, worker, --app=rq.app, --pool=gevent, --loglevel=INFO ]
+#    image: &img mail
+#    command: [ celery, mail, --app=rq.app, --pool=gevent, --loglevel=INFO ]
 #    links:
 #      - rabbitmq
 #    environment:
@@ -51,7 +51,7 @@ services:
 
 #  celery_worker:
 #    hostname: rabbitmq
-#    command: celery -A public worker -l INFO
+#    command: celery -A public mail -l INFO
 #    ports: [ ]
 #    networks:
 #      - main
@@ -67,14 +67,12 @@ services:
     ports:
       - 6379:6379
 
-  worker:
-    build: .
-    command: "celery worker -A rq -l INFO"
+  mail:
+    build: "./mail"
+    command: "celery -A rq worker -l INFO"
     environment:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis
-    volumes:
-      - .:/planner
     depends_on:
       - redis
 #
@@ -95,4 +93,4 @@ services:
     ports:
       - 8888:8888
     depends_on:
-      - worker
+      - mail
