@@ -1,4 +1,4 @@
-from app import db,app
+from app import db, app
 from flask_login import UserMixin, current_user
 from flask_login import LoginManager
 from werkzeug.security import safe_str_cmp, generate_password_hash, check_password_hash
